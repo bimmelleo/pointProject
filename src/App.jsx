@@ -1,0 +1,67 @@
+import { useState } from 'react';
+import {
+  Activity, ArrowDownRight, ArrowRight, ArrowUpRight, Bell, CalendarDays, Check,
+  ChevronDown, ChevronLeft, ChevronRight, CircleHelp, Clock3, Download, Ellipsis,
+  Eye, EyeOff, FileClock, Fingerprint, LayoutDashboard, LockKeyhole, LogOut,
+  Mail, Menu, MoreHorizontal, Plus, Search, Settings2, ShieldCheck, Users,
+  X
+} from 'lucide-react';
+
+const initialPeople = [
+  { name: 'Ana Carolina Souza', role: 'Analista contábil', initials: 'AS', color: 'pink', status: 'Em dia', hours: '08h 12m', last: '17:42' },
+  { name: 'Bruno Martins Lima', role: 'Assistente fiscal', initials: 'BL', color: 'blue', status: 'Em dia', hours: '08h 04m', last: '17:35' },
+  { name: 'Camila Rodrigues', role: 'Departamento pessoal', initials: 'CR', color: 'peach', status: 'Atraso', hours: '07h 21m', last: '17:18' },
+  { name: 'Diego Almeida Costa', role: 'Analista contábil', initials: 'DC', color: 'lavender', status: 'Em dia', hours: '08h 30m', last: '17:46' },
+  { name: 'Eduarda Freitas Melo', role: 'Assistente fiscal', initials: 'EM', color: 'mint', status: 'Pendente', hours: '—', last: '—' },
+];
+
+function Brand({ light = false }) { return <div className={`brand ${light ? 'brand-light' : ''}`}><span className="brand-mark"><Fingerprint size={20} strokeWidth={2.2}/></span><span>ponto<span className="brand-weight">claro</span></span></div>; }
+
+function Login({ onLogin }) {
+  const [show, setShow] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  async function submit(e) {
+    e.preventDefault(); setError(''); setLoading(true);
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+      const data = await response.json(); if (!response.ok) throw new Error(data.error || 'Não foi possível entrar.');
+      onLogin(data.user);
+    } catch (err) { setError(err.message === 'Failed to fetch' ? 'Não foi possível conectar ao servidor. Tente novamente.' : err.message); }
+    finally { setLoading(false); }
+  }
+  return <main className="login-page">
+    <section className="login-visual">
+      <div className="visual-top"><Brand light/><span className="secure-note"><ShieldCheck size={15}/> Seus dados protegidos</span></div>
+      <div className="visual-copy"><h1>O tempo da sua equipe<br/>bem cuidado</h1></div>
+      <div className="visual-art" aria-hidden="true"><div className="art-orbit orbit-one"/><div className="art-orbit orbit-two"/><div className="art-clock"><Clock3 size={82} strokeWidth={1}/><span className="clock-center"/></div><span className="spark spark-one">✳</span><span className="spark spark-two">✳</span></div>
+      <div className="visual-footer"><span>Um jeito mais humano de cuidar do tempo.</span><span>© 2026 PontoClaro</span></div>
+    </section>
+    <section className="login-panel"><div className="login-mobile-brand login-brand-top"><Brand/></div><div className="login-box"><h2>Bem-vindo</h2><p className="login-subtitle">Entre na sua conta</p>
+      <form onSubmit={submit} className="login-form"><label htmlFor="email">E-mail</label><div className="input-wrap"><Mail size={18}/><input id="email" type="email" placeholder="voce@escritorio.com.br" value={email} onChange={e=>setEmail(e.target.value)} required autoComplete="username"/></div>
+      <div className="label-row"><label htmlFor="password">Senha</label></div><div className="input-wrap"><LockKeyhole size={18}/><input id="password" type={show?'text':'password'} placeholder="Sua senha" value={password} onChange={e=>setPassword(e.target.value)} required autoComplete="current-password"/><button className="icon-button reveal" type="button" aria-label={show?'Ocultar senha':'Mostrar senha'} onClick={()=>setShow(!show)}>{show?<EyeOff size={18}/>:<Eye size={18}/>}</button></div><div className="forgot-row"><button type="button" className="text-button" onClick={()=>setError('Entre em contato com o administrador do seu escritório para redefinir sua senha.')}>Esqueceu sua senha?</button></div>
+      {error && <p className="form-error" role="alert">{error}</p>}<button className="primary-button login-submit" disabled={loading}>{loading?'Entrando…':'Entrar'}</button></form>
+      <div className="login-help"><CircleHelp size={16}/><span>Precisa de ajuda? <a href="mailto:suporte@pontoclaro.com.br">Fale com o suporte</a></span></div></div><div className="login-bottom"><span>© 2026 PontoClaro. Todos os direitos reservados.</span><span><a href="#termos">Termos de uso</a><a href="#privacidade">Política de privacidade</a></span></div></section>
+  </main>;
+}
+
+function Sidebar({ active, setActive, onLogout, mobileOpen, closeMobile }) {
+  const items = [{ label: 'Visão geral', icon: LayoutDashboard }, { label: 'Colaboradores', icon: Users }, { label: 'Lançamentos', icon: FileClock }, { label: 'Relatórios', icon: Activity }];
+  return <><div className={`sidebar-scrim ${mobileOpen?'show':''}`} onClick={closeMobile}/><aside className={`sidebar ${mobileOpen?'sidebar-open':''}`}><div className="sidebar-brand"><Brand/><button className="icon-button close-menu" aria-label="Fechar menu" onClick={closeMobile}><X size={18}/></button></div><span className="nav-caption">MENU PRINCIPAL</span><nav className="side-nav">{items.map(item=><button key={item.label} className={`nav-item ${active===item.label?'active':''}`} onClick={()=>{setActive(item.label);closeMobile();}}><item.icon size={18}/><span>{item.label}</span>{item.label==='Lançamentos'&&<span className="nav-count">4</span>}</button>)}</nav><div className="sidebar-bottom"><div className="help-card"><div className="help-icon"><CircleHelp size={18}/></div><b>Precisa de ajuda?</b><p>Nosso time está aqui para ajudar.</p><a href="mailto:suporte@pontoclaro.com.br">Falar com suporte <ArrowRight size={13}/></a></div><button className="profile-row"><div className="profile-avatar">MC</div><span><b>Mariana Costa</b><small>Administradora</small></span><MoreHorizontal size={19}/></button><button className="logout-link" onClick={onLogout}><LogOut size={15}/> Sair da conta</button></div></aside></>;
+}
+
+function Dashboard({ user, onLogout }) {
+  const [active, setActive] = useState('Visão geral'); const [mobileOpen, setMobileOpen] = useState(false); const [search, setSearch] = useState(''); const [period, setPeriod] = useState('Hoje');
+  const people = initialPeople.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+  return <div className="app-shell"><Sidebar active={active} setActive={setActive} onLogout={onLogout} mobileOpen={mobileOpen} closeMobile={()=>setMobileOpen(false)}/><main className="main-area"><header className="topbar"><button className="icon-button menu-toggle" aria-label="Abrir menu" onClick={()=>setMobileOpen(true)}><Menu size={20}/></button><div className="breadcrumbs">Painel <ChevronRight size={14}/> <b>{active}</b></div></header>
+      <div className="content"><div className="welcome-row"><div><div className="eyebrow">SEGUNDA-FEIRA, 22 DE SETEMBRO DE 2026</div><h1>Bom dia, {user?.name?.split(' ')[0] || 'Mariana'} <span className="wave">✳</span></h1><p>Acompanhe o dia do seu time em um só lugar.</p></div><button className="primary-button add-button" onClick={()=>setActive('Lançamentos')}><Plus size={17}/> Novo lançamento</button></div>
+      <section className="metric-grid"><article className="metric-card"><div className="metric-top"><span>Colaboradores ativos</span><span className="metric-icon icon-green"><Users size={17}/></span></div><div className="metric-value">24 <span className="trend positive"><ArrowUpRight size={14}/> 8,3%</span></div><div className="metric-foot">em <b>3 empresas</b> atendidas</div><div className="metric-decoration bars"><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/></div></article><article className="metric-card"><div className="metric-top"><span>Jornadas completas</span><span className="metric-icon icon-blue"><Clock3 size={17}/></span></div><div className="metric-value">18 <small>/ 24</small></div><div className="metric-foot"><span className="tiny-dot green"/> <b>75%</b> do time em dia</div><div className="progress-track"><span/></div></article><article className="metric-card"><div className="metric-top"><span>Pendências de hoje</span><span className="metric-icon icon-amber"><FileClock size={17}/></span></div><div className="metric-value">04 <span className="trend caution"><ArrowDownRight size={14}/> 2</span></div><div className="metric-foot">2 precisam da sua atenção</div><div className="pending-dots"><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/></div></article><article className="metric-card"><div className="metric-top"><span>Horas registradas</span><span className="metric-icon icon-violet"><Activity size={17}/></span></div><div className="metric-value">186<small>h</small> 24<small>m</small></div><div className="metric-foot">no total <b>hoje</b></div><div className="metric-decoration bars bars-violet"><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/></div></article></section>
+      <section className="dashboard-grid"><article className="panel team-panel"><div className="panel-header"><div><h2>Equipe de hoje</h2><p>Veja como estão as jornadas do seu time.</p></div><button className="more-button" aria-label="Mais opções"><Ellipsis size={21}/></button></div><div className="table-controls"><div className="table-tabs"><button className="selected">Todos <span>24</span></button><button onClick={()=>setSearch('Eduarda')}>Pendentes <span className="tab-alert">4</span></button></div><div className="table-actions"><label className="search-field"><Search size={15}/><input placeholder="Buscar pessoa" value={search} onChange={e=>setSearch(e.target.value)}/></label><button className="filter-button"><span>Filtrar</span><ChevronDown size={14}/></button></div></div><div className="table-scroll"><table><thead><tr><th>COLABORADOR</th><th>STATUS</th><th>HORAS HOJE</th><th>ÚLTIMO REGISTRO</th><th></th></tr></thead><tbody>{people.map((p,i)=><tr key={p.name}><td><div className="person-cell"><div className={`person-avatar ${p.color}`}>{p.initials}</div><span><b>{p.name}</b><small>{p.role}</small></span></div></td><td><span className={`status status-${p.status==='Em dia'?'ok':p.status==='Atraso'?'late':'pending'}`}><i/>{p.status}</span></td><td className="hours-cell">{p.hours}</td><td className="last-cell">{p.last}</td><td><button className="row-menu" aria-label={`Opções para ${p.name}`}><MoreHorizontal size={17}/></button></td></tr>)}</tbody></table></div><div className="table-footer"><span>Exibindo <b>{people.length?1:0}–{people.length}</b> de <b>24 colaboradores</b></span><div className="pagination"><button disabled><ChevronLeft size={15}/></button><button className="page-active">1</button><button>2</button><button>3</button><span>…</span><button>5</button><button><ChevronRight size={15}/></button></div></div></article>
+        <div className="right-column"><article className="panel activity-panel"><div className="panel-header"><div><h2>Atividade recente</h2><p>Últimos registros do time</p></div><button className="more-button"><Ellipsis size={21}/></button></div><div className="activity-list"><div className="activity-item"><div className="activity-person pink">AS</div><div className="activity-copy"><b>Ana Carolina Souza</b><span>Registrou <strong>entrada</strong></span></div><time>08:03</time></div><div className="activity-item"><div className="activity-person blue">BL</div><div className="activity-copy"><b>Bruno Martins Lima</b><span>Registrou <strong>entrada</strong></span></div><time>08:12</time></div><div className="activity-item"><div className="activity-person lavender">DC</div><div className="activity-copy"><b>Diego Almeida Costa</b><span>Registrou <strong>saída</strong></span></div><time>12:04</time></div><div className="activity-item"><div className="activity-person mint">JR</div><div className="activity-copy"><b>Juliana Ribeiro</b><span>Registrou <strong>retorno</strong></span></div><time>13:01</time></div></div><button className="view-all" onClick={()=>setActive('Lançamentos')}>Ver todos os lançamentos <ArrowRight size={15}/></button></article>
+        <article className="tip-card"><div className="tip-icon"><ShieldCheck size={20}/></div><div><span className="eyebrow">DICA DO DIA</span><h3>Fechamento sem surpresas</h3><p>Revise as pendências durante o mês e deixe o fechamento mais tranquilo.</p><button onClick={()=>setActive('Relatórios')}>Conferir pendências <ArrowRight size={14}/></button></div><span className="tip-spark">✳</span></article></div></section>
+      <footer className="page-footer"><span>© 2026 PontoClaro <span>·</span> Feito para cuidar do tempo.</span><div><a href="#ajuda">Central de ajuda</a><a href="#privacidade">Privacidade</a><span className="system-status"><i/> Sistemas operacionais</span></div></footer></div></main></div>;
+}
+
+export default function App() { const [user, setUser] = useState(()=>{ try { return JSON.parse(sessionStorage.getItem('pc-user')); } catch { return null; } }); function login(data){sessionStorage.setItem('pc-user',JSON.stringify(data));setUser(data);} function logout(){sessionStorage.removeItem('pc-user');setUser(null);} return user?<Dashboard user={user} onLogout={logout}/>:<Login onLogin={login}/>; }
