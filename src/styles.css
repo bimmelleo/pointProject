@@ -73,3 +73,75 @@
 .login-brand-top .brand{font-size:20px}
 .login-brand-top .brand-mark{background:#e7e8e6;color:#5d625e}
 @media(max-width:800px){.login-brand-top{display:block;top:24px;left:24px}}
+.dashboard-topbar{display:flex;height:126px;padding:0 35px;justify-content:flex-start;background:#fff}
+.dashboard-topbar h1{font:700 22px var(--serif);letter-spacing:-.7px;margin:0;color:#29332b}
+.dashboard-topbar .wave{font-size:15px}
+.profile-row{margin-top:12px;padding:15px 5px 14px;gap:11px}
+.profile-avatar{width:36px;height:36px;font-size:10px}
+.profile-row b{font-size:12px}
+.profile-row small{font-size:10px}
+.logout-link{margin-top:9px;padding:10px 5px;font-size:12px;gap:9px}
+@media(max-width:800px){.dashboard-topbar{height:102px;padding:0 16px;justify-content:flex-start}.dashboard-topbar .menu-toggle{display:grid}.dashboard-topbar h1{font-size:19px;margin-left:10px}.dashboard-topbar+.content{padding-top:20px}.profile-row{margin-top:10px;padding:13px 5px}.logout-link{margin-top:7px}}
+.sidebar{padding-top:14px}
+.sidebar-brand{padding:0 8px 34px}
+.sidebar-brand .brand{font-size:22px;gap:11px}
+.sidebar-brand .brand-mark{width:38px;height:38px;border-radius:12px}
+.nav-caption{font-size:10px;margin-bottom:12px}
+.nav-item{font-size:13px;gap:12px;padding:12px 10px}
+.nav-count{font-size:10px}
+@media(max-width:800px){.sidebar{padding-top:14px}.sidebar-brand{padding-bottom:30px}}
+.metric-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:24px}
+.metric-card{min-height:170px;padding:21px 20px}
+.metric-top{font-size:12px;gap:10px}
+.metric-icon{width:34px;height:34px;border-radius:9px;flex:0 0 34px}
+.metric-icon svg{width:19px;height:19px}
+.metric-value{font-size:34px;margin-top:15px}
+.metric-value small{font-size:15px}
+.metric-foot{font-size:11px;margin-top:7px}
+.progress-track{height:5px;margin-top:15px}
+.metric-decoration{height:42px;right:16px;bottom:13px}
+.metric-decoration i{width:6px}
+.pending-dots{right:20px;bottom:19px;gap:6px;grid-template-columns:repeat(6,6px)}
+.pending-dots i{width:6px;height:6px}
+.icon-rose{background:#f6e9e7;color:#aa726a}
+.icon-teal{background:#e7f0ef;color:#5f8984}
+.bars-rose i{background:#d6aaa3}
+@media(max-width:1100px){.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.metric-card{min-height:160px}}
+@media(max-width:560px){.metric-grid{grid-template-columns:1fr;gap:12px}.metric-card{min-height:145px;padding:17px 18px}}
+.metric-card{min-height:230px;aspect-ratio:1.45;padding:25px 24px}
+.metric-top{font-size:15px;line-height:1.35}
+.metric-top>span:first-child{text-transform:none}
+.metric-value{font-size:40px;margin-top:23px}
+.metric-value small{font-size:17px}
+.metric-foot{font-size:12px}
+.metric-decoration{height:48px;bottom:19px;right:20px}
+.pending-dots{bottom:26px;right:24px}
+@media(max-width:1100px){.metric-card{min-height:220px;aspect-ratio:1.5;padding:23px 22px}}
+@media(max-width:560px){.metric-card{min-height:175px;aspect-ratio:auto;padding:20px}.metric-value{font-size:36px;margin-top:19px}}
+.metric-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:0}
+.metric-card{height:clamp(150px,calc(50vh - 95px),185px);min-height:0;aspect-ratio:auto;padding:18px 20px}
+.metric-top{font-size:16px;font-weight:600;color:#465148;line-height:1.35}
+.metric-value{font-size:36px;margin-top:12px}
+.metric-decoration{height:37px;bottom:14px;right:16px}
+.pending-dots{bottom:18px;right:20px}
+@media(min-width:561px) and (max-width:1100px){.metric-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.metric-grid{grid-template-columns:1fr;gap:12px}.metric-card{height:160px;min-height:160px;padding:18px}.metric-value{font-size:34px;margin-top:12px}}
+.login-box h2{font-size:clamp(44px,4.2vw,58px);color:#252a26;letter-spacing:-2.2px}
+.login-subtitle{font-size:20px;color:#505752}
+.login-form>label,.label-row label{font-size:17px;color:#373d38}
+.input-wrap{border-color:#cbd0cb;color:#535b55}
+.input-wrap>svg{color:#606861}
+.input-wrap input{font-size:18px;color:#252b26}
+.input-wrap input::placeholder{color:#6a726c}
+.text-button{font-size:15px;color:#414943}
+.login-submit{font-size:18px}
+.login-bottom{font-size:12px;color:#515852}
+.login-bottom a{color:#343b36}
+.login-visual .visual-copy h1{color:#333835}
+.login-brand-top .brand{color:#303632}
+@media(max-width:800px){.login-box h2{font-size:42px}.login-subtitle{font-size:18px}.login-form>label,.label-row label{font-size:16px}.input-wrap input{font-size:17px}.login-submit{font-size:17px}.login-bottom{font-size:11px}}
+.login-form .input-wrap input:-webkit-autofill,
+.login-form .input-wrap input:-webkit-autofill:hover,
+.login-form .input-wrap input:-webkit-autofill:focus,
+.login-form .input-wrap input:autofill{box-shadow:0 0 0 1000px #fff inset!important;-webkit-text-fill-color:#252b26!important;caret-color:#252b26}
+.sidebar-settings{margin-bottom:8px}

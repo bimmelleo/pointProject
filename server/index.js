@@ -19,7 +19,7 @@ const server = createServer((req, res) => {
         if (!email || !password) { res.writeHead(400); return res.end(JSON.stringify({ error: 'Informe e-mail e senha.' })); }
         // Protótipo: autenticação demonstrativa, substituir por validação segura e persistida.
         res.writeHead(200);
-        res.end(JSON.stringify({ token: 'demo-session', user: { name: 'Mariana Costa', email, role: 'admin' } }));
+        res.end(JSON.stringify({ token: 'demo-session', user: { name: 'Leonardo Bimmel', email, role: 'admin' } }));
       } catch { res.writeHead(400); res.end(JSON.stringify({ error: 'Requisição inválida.' })); }
     });
     return;
