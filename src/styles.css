@@ -145,3 +145,204 @@
 .login-form .input-wrap input:-webkit-autofill:focus,
 .login-form .input-wrap input:autofill{box-shadow:0 0 0 1000px #fff inset!important;-webkit-text-fill-color:#252b26!important;caret-color:#252b26}
 .sidebar-settings{margin-bottom:8px}
+.companies-page{display:grid;gap:20px}
+.companies-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.companies-heading h2{font:700 25px var(--serif);letter-spacing:-.8px;margin:7px 0 5px;color:#29332b}
+.companies-heading p{font-size:13px;color:#6f7971;margin:0}
+.company-add-button{height:42px;padding:0 16px;font-size:13px;flex-shrink:0}
+.companies-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;color:#69736b;font-size:12px}
+.companies-toolbar .search-field{width:min(380px,100%);height:40px;padding:0 12px;border-radius:7px;background:#fff}
+.companies-toolbar .search-field input{font-size:13px}
+.companies-table-wrap{border:1px solid #e8ece8;border-radius:10px;background:#fff;overflow:hidden}
+.companies-table{width:100%;border-collapse:collapse;text-align:left;white-space:normal}
+.companies-table thead{background:#f8f9f7}
+.companies-table th{font-size:10px;letter-spacing:.55px;color:#788279;padding:14px 16px}
+.companies-table td{font-size:12px;color:#465149;padding:15px 16px;border-top:1px solid #edf0ed;vertical-align:middle}
+.companies-table td>small{display:block;color:#788279;font-size:11px;margin-top:4px}
+.company-name-cell{display:flex;align-items:center;gap:11px;min-width:180px}
+.company-name-cell>b{font-size:13px;color:#303a33;font-weight:600}
+.company-list-icon{width:36px;height:36px;display:grid;place-items:center;flex:0 0 36px;border-radius:10px;background:#eaf1eb;color:#4e7958}
+.company-status{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:6px 9px;font-size:11px;font-weight:600}
+.company-status i{width:7px;height:7px;background:#5a9565;border-radius:50%}
+.company-status.is-active{background:#edf5ee;color:#49714f}
+.company-status.is-inactive{background:#f1f2f0;color:#68716a}
+.company-status.is-inactive i{background:#939a94}
+.actions-heading{text-align:right}
+.company-actions{display:flex;justify-content:flex-end;gap:7px}
+.company-actions button,.modal-close{width:34px;height:34px;border:1px solid #e8ece8;border-radius:7px;background:#fff;color:#68736a;display:grid;place-items:center}
+.company-actions button:hover,.modal-close:hover{background:#f4f6f3;color:#345d40}
+.company-actions button.delete-action:hover{background:#fbefed;color:#a64e45;border-color:#f1d8d3}
+.companies-empty{min-height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:28px}
+.companies-empty .company-list-icon{width:46px;height:46px;margin-bottom:9px}
+.companies-empty h3{font:700 17px var(--serif);margin:4px 0 6px;color:#344037}
+.companies-empty p{max-width:380px;color:#778179;font-size:12px;line-height:1.6;margin:0 0 16px}
+.secondary-button{min-height:39px;border:1px solid #dfe5df;background:#fff;color:#46544a;border-radius:7px;padding:0 13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:600}
+.secondary-button:hover{background:#f5f7f4}
+.modal-backdrop{position:fixed;inset:0;z-index:30;background:rgba(27,35,29,.42);display:grid;place-items:center;padding:20px}
+.company-modal{width:min(100%,590px);max-height:calc(100vh - 40px);overflow-y:auto;background:#fff;border-radius:13px;box-shadow:0 22px 70px rgba(24,35,27,.2);padding:25px}
+.modal-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:22px}
+.modal-heading h2{font:700 23px var(--serif);letter-spacing:-.6px;color:#29332b;margin:6px 0}
+.modal-heading p{font-size:12px;color:#788179;margin:0}
+.modal-close{flex:0 0 34px}
+.company-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-field{display:grid;gap:7px;font-size:12px;font-weight:600;color:#454f47}
+.form-field input,.form-field select{height:43px;min-width:0;border:1px solid #dfe5df;border-radius:7px;background:#fff;padding:0 11px;color:#28332b;font:400 13px 'DM Sans',sans-serif;outline:0}
+.form-field input:focus,.form-field select:focus{border-color:#77977a;box-shadow:0 0 0 3px #638b6a18}
+.form-field input::placeholder{color:#9ba39c}
+.full-field{grid-column:1/-1}
+.company-form-error{grid-column:1/-1;margin:0;color:#aa4e47;font-size:12px}
+.modal-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:9px;padding-top:7px}
+.modal-actions .primary-button{min-height:39px;padding:0 15px;font-size:12px}
+@media(max-width:700px){.companies-heading{align-items:flex-start;flex-direction:column}.company-add-button{height:40px}.companies-table-wrap{overflow-x:auto}.companies-table{min-width:690px}.companies-toolbar{align-items:flex-start;flex-direction:column}.companies-toolbar .search-field{width:100%}.company-modal{padding:20px}}
+@media(max-width:460px){.company-form{grid-template-columns:1fr}.full-field,.company-form-error,.modal-actions{grid-column:1}.modal-actions{flex-direction:column-reverse}.modal-actions button{width:100%}.companies-heading h2{font-size:22px}}
+.companies-page{gap:24px}
+.companies-heading h2{font-size:30px}
+.companies-heading p{font-size:15px}
+.company-add-button{height:48px;padding:0 19px;font-size:15px;gap:10px}
+.company-add-button svg{width:20px;height:20px}
+.companies-toolbar{font-size:14px}
+.companies-toolbar .search-field{height:46px;width:min(440px,100%);gap:9px;padding:0 14px}
+.companies-toolbar .search-field svg{width:20px;height:20px}
+.companies-toolbar .search-field input{font-size:15px}
+.companies-table th{font-size:12px;padding:17px 19px}
+.companies-table td{font-size:14px;padding:18px 19px}
+.companies-table td>small{font-size:12px}
+.company-name-cell{gap:13px}
+.company-name-cell>b{font-size:15px}
+.company-list-icon{width:42px;height:42px;flex-basis:42px;border-radius:11px}
+.company-list-icon svg{width:20px;height:20px}
+.company-status{font-size:13px;padding:7px 11px;gap:8px}
+.company-status i{width:8px;height:8px}
+.company-actions{gap:9px}
+.company-actions button,.modal-close{width:40px;height:40px}
+.company-actions button svg{width:19px;height:19px}
+.companies-empty{min-height:300px}
+.companies-empty .company-list-icon{width:54px;height:54px;flex-basis:54px}
+.companies-empty .company-list-icon svg{width:25px;height:25px}
+.companies-empty h3{font-size:20px}
+.companies-empty p{font-size:14px}
+.secondary-button{min-height:44px;padding:0 16px;font-size:14px;gap:9px}
+.secondary-button svg{width:19px;height:19px}
+.company-modal{width:min(100%,650px);padding:30px}
+.modal-heading{margin-bottom:26px}
+.modal-heading h2{font-size:28px}
+.modal-heading p{font-size:14px}
+.modal-close{width:40px;height:40px;flex-basis:40px}
+.modal-close svg{width:22px;height:22px}
+.company-form{gap:19px}
+.form-field{font-size:14px;gap:9px}
+.form-field input,.form-field select{height:50px;padding:0 13px;font-size:15px;border-radius:8px}
+.company-form-error{font-size:14px}
+.modal-actions{gap:11px;padding-top:10px}
+.modal-actions .primary-button{min-height:45px;padding:0 18px;font-size:14px}
+@media(max-width:700px){.companies-heading h2{font-size:27px}.companies-heading p{font-size:14px}.companies-table{min-width:760px}.company-modal{padding:24px}}
+@media(max-width:460px){.company-modal{padding:20px}.modal-heading h2{font-size:24px}.form-field input,.form-field select{height:48px}}
+.delete-modal{width:min(100%,450px);background:#fff;border:1px solid #eceeeb;border-radius:14px;padding:30px;box-shadow:0 22px 70px rgba(24,35,27,.2);text-align:center}
+.delete-modal-icon{width:52px;height:52px;border-radius:15px;background:#fbefed;color:#ae5c52;display:grid;place-items:center;margin:0 auto 15px}
+.delete-modal h2{font:700 24px var(--serif);letter-spacing:-.5px;color:#303a32;margin:0 0 9px}
+.delete-modal p{font-size:14px;line-height:1.65;color:#717b73;margin:0 auto;max-width:350px}
+.delete-modal p b{color:#414b43;font-weight:700}
+.delete-modal-actions{display:flex;justify-content:center;gap:10px;margin-top:25px}
+.danger-button{min-height:44px;padding:0 16px;border:0;border-radius:7px;background:#a94e45;color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:700}
+.danger-button:hover{background:#913e36}
+@media(max-width:460px){.delete-modal{padding:24px 20px}.delete-modal-actions{flex-direction:column-reverse}.delete-modal-actions button{width:100%}}
+.companies-table td{padding-top:21px;padding-bottom:21px}
+.company-open-button{width:100%;min-height:56px;display:flex;align-items:center;gap:12px;border:0;border-radius:10px;padding:7px 9px;background:transparent;text-align:left;color:inherit;cursor:pointer;transition:background .16s ease,transform .16s ease}
+.company-open-button:hover{background:#f1f5f1;transform:translateX(2px)}
+.company-open-button:focus-visible{outline:3px solid #8eb49a;outline-offset:2px}
+.company-open-label{min-width:0;flex:1}
+.company-open-label b,.company-open-label small{display:block}
+.company-open-label b{font-size:15px;font-weight:700;color:#303a33;line-height:1.35}
+.company-open-label small{font-size:12px;color:#55765c;margin-top:4px}
+.company-open-chevron{flex:0 0 auto;color:#718276;transition:transform .16s ease}
+.company-open-button:hover .company-open-chevron{transform:translateX(3px);color:#426c4d}
+.company-detail-page{display:grid;gap:22px}
+.company-back-link{width:max-content;display:flex;align-items:center;gap:6px;border:0;padding:4px 0;background:none;color:#4c7455;font-size:14px;font-weight:600}
+.company-back-link:hover{color:#31583a}
+.company-detail-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 24px;border:1px solid #e8ece8;border-radius:11px;background:#fff}
+.company-detail-title{display:flex;align-items:center;gap:16px;min-width:0}
+.company-detail-icon{width:56px;height:56px;display:grid;place-items:center;flex:0 0 56px;border-radius:15px;background:#eaf1eb;color:#4e7958}
+.company-detail-title h2{font:700 26px var(--serif);letter-spacing:-.6px;color:#2d382f;margin:5px 0 9px;overflow-wrap:anywhere}
+.company-detail-actions{display:flex;gap:9px;flex:0 0 auto}
+.company-detail-actions .secondary-button{min-height:42px}
+.detail-delete-button{min-height:42px;display:flex;align-items:center;gap:8px;padding:0 13px;border:1px solid #f0dcd8;border-radius:7px;background:#fff;color:#a34c44;font-size:13px;font-weight:600}
+.detail-delete-button:hover{background:#fbefed}
+.company-information{border:1px solid #e8ece8;border-radius:11px;background:#fff;padding:22px 24px}
+.company-information-heading h3{font:700 18px var(--serif);color:#303b33;margin:0 0 5px}
+.company-information-heading p{font-size:13px;color:#788179;margin:0}
+.company-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#edf0ed;border:1px solid #edf0ed;border-radius:8px;overflow:hidden;margin-top:18px}
+.company-info-grid article{min-height:82px;padding:15px 16px;background:#fff;display:grid;align-content:center;gap:7px;min-width:0}
+.company-info-grid article span{font-size:12px;color:#7e8880}
+.company-info-grid article b{font-size:14px;color:#354138;overflow-wrap:anywhere}
+.company-detail-note{display:flex;align-items:center;gap:11px;padding:16px 18px;border:1px solid #e6ece6;border-radius:9px;background:#f4f7f3;color:#657268;font-size:13px;line-height:1.5}
+.company-detail-note svg{color:#64816a;flex:0 0 auto}
+@media(max-width:700px){.company-detail-header{align-items:flex-start;flex-direction:column}.company-detail-actions{width:100%;flex-wrap:wrap}.company-info-grid{grid-template-columns:1fr}.company-detail-title h2{font-size:23px}}
+@media(max-width:460px){.company-detail-actions>*{flex:1}.company-information{padding:18px}.company-detail-header{padding:18px}}
+.company-workspace-page,.company-function-page{display:grid;align-content:start;gap:24px}
+.company-workspace-heading{display:flex;align-items:center;gap:16px;padding:22px 24px;border:1px solid #e8ece8;border-radius:11px;background:#fff}
+.company-workspace-heading>div{flex:1;min-width:0}
+.company-workspace-heading h2,.company-function-heading h2{font:700 27px var(--serif);letter-spacing:-.7px;color:#2d382f;margin:5px 0}
+.company-workspace-heading p,.company-function-heading p{font-size:14px;color:#707a72;margin:0}
+.available-functions{display:grid;gap:16px}
+.function-card{min-height:112px;width:100%;display:flex;align-items:center;gap:17px;padding:19px 22px;border:1px solid #e4e9e4;border-radius:12px;background:#fff;text-align:left;color:#303a33;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;cursor:pointer}
+.function-card:hover{transform:translateY(-2px);border-color:#c8d8c9;box-shadow:0 10px 24px rgba(45,68,49,.08)}
+.function-card:focus-visible{outline:3px solid #8eb49a;outline-offset:2px}
+.function-card-icon,.company-function-icon{width:52px;height:52px;display:grid;place-items:center;flex:0 0 52px;border-radius:14px;background:#eaf1eb;color:#4e7958}
+.function-card-copy{flex:1;display:grid;gap:6px}
+.function-card-copy b{font-size:17px;font-weight:700;color:#334037}
+.function-card-copy small{font-size:13px;color:#758078}
+.function-card-arrow{color:#748176;transition:transform .16s ease}
+.function-card:hover .function-card-arrow{transform:translateX(4px);color:#426c4d}
+.company-function-heading{display:flex;align-items:center;gap:17px;padding:22px 24px;border:1px solid #e8ece8;border-radius:11px;background:#fff}
+.company-function-heading>div{min-width:0}
+.company-function-icon{width:58px;height:58px;flex-basis:58px}
+.function-coming-soon{min-height:110px;display:flex;align-items:center;gap:12px;padding:20px;border:1px solid #e6ece6;border-radius:10px;background:#f4f7f3;color:#647168;font-size:14px}
+.function-coming-soon svg{color:#64816a;flex:0 0 auto}
+@media(max-width:700px){.company-workspace-heading{align-items:flex-start;flex-wrap:wrap;padding:18px}.company-workspace-heading .company-status{margin-left:72px}.company-workspace-heading h2,.company-function-heading h2{font-size:23px}.function-card{padding:16px;gap:13px}.function-card-copy b{font-size:16px}.function-card-copy small{font-size:12px}.company-function-heading{padding:18px}}
+.employees-page{display:grid;gap:22px}
+.employees-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;padding:20px 22px;border:1px solid #e8ece8;border-radius:11px;background:#fff}
+.employees-heading h2{font:700 27px var(--serif);letter-spacing:-.7px;color:#2d382f;margin:6px 0}
+.employees-heading p{font-size:14px;color:#707a72;margin:0}
+.employee-add-button{min-height:46px;padding:0 16px;font-size:14px;gap:9px;flex-shrink:0}
+.employees-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:15px}
+.employees-section-heading h3{font:700 20px var(--serif);color:#303b33;margin:0 0 4px}
+.employees-section-heading p{font-size:13px;color:#788179;margin:0}
+.employees-section-heading .search-field{height:43px;width:min(390px,100%);padding:0 12px;border-radius:7px;background:#fff}
+.employees-section-heading .search-field svg{width:19px;height:19px}
+.employees-section-heading .search-field input{font-size:14px}
+.employees-table-wrap{border:1px solid #e8ece8;border-radius:10px;background:#fff;overflow:hidden}
+.employees-table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}
+.employees-table thead{background:#f8f9f7}
+.employees-table th{font-size:11px;letter-spacing:.5px;color:#788279;padding:15px 16px}
+.employees-table td{font-size:13px;color:#465149;padding:16px;border-top:1px solid #edf0ed;vertical-align:middle}
+.employee-name-cell{display:flex;align-items:center;gap:10px;min-width:190px}
+.employee-name-cell>span{width:36px;height:36px;display:grid;place-items:center;flex:0 0 36px;border-radius:50%;background:#eaf1eb;color:#4e7958;font-size:11px;font-weight:700}
+.employee-name-cell>b{font-size:14px;font-weight:600;color:#303a33}
+.employee-status{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:6px 10px;font-size:12px;font-weight:600}
+.employee-status i{width:7px;height:7px;border-radius:50%;background:#5a9565}
+.employee-active{background:#edf5ee;color:#49714f}
+.employee-inactive{background:#f1f2f0;color:#68716a}
+.employee-inactive i{background:#939a94}
+.employees-table .company-actions button{width:38px;height:38px}
+.employees-table .company-actions svg{width:18px;height:18px}
+.employee-modal{width:min(100%,660px)}
+@media(max-width:800px){.employees-heading{align-items:flex-start;flex-direction:column}.employees-section-heading{align-items:stretch;flex-direction:column}.employees-section-heading .search-field{width:100%}.employees-table-wrap{overflow-x:auto}.employees-table{min-width:820px}}
+@media(max-width:460px){.employees-heading{padding:18px}.employees-heading h2{font-size:23px}.employee-add-button{width:100%;justify-content:center}}
+.employee-status-cell{display:flex;align-items:center;gap:9px;min-width:155px}
+.open-employee-button{min-height:34px;padding:0 12px;border:1px solid #d6e2d7;border-radius:7px;background:#f5f8f4;color:#456e4d;font-size:12px;font-weight:700;transition:background .15s ease,border-color .15s ease}
+.open-employee-button:hover{background:#e8f0e8;border-color:#b9cfbc}
+.open-employee-button:focus-visible{outline:3px solid #8eb49a;outline-offset:2px}
+.companies-heading .eyebrow{display:block;font-size:15px;line-height:1.4;letter-spacing:1.1px;font-weight:800;color:#435a47}
+.company-status.is-inactive{background:#fbefed;color:#a34c44}
+.company-status.is-inactive i{background:#bd695f}
+.employees-heading h2{margin:0}
+.employees-section-heading h3{margin:0}
+.employee-status-cell{min-width:200px;gap:11px}
+.open-employee-button,.open-employee-button:disabled{min-width:94px;min-height:44px;padding:0 17px;border:1px solid #3f7050;border-radius:8px;background:#477956;color:#fff;font-size:14px;font-weight:700;cursor:not-allowed;opacity:1}
+.open-employee-button:disabled:hover{background:#477956;border-color:#3f7050}
+.dashboard-topbar{height:72px}
+.open-column-heading,.open-employee-cell{text-align:center!important}
+.open-employee-cell{width:150px}
+.open-employee-button,.open-employee-button:disabled{min-width:116px;min-height:42px;padding:0 14px;font-size:13px}
+.employees-table{min-width:950px}
+@media(max-width:800px){.dashboard-topbar{height:62px}}
