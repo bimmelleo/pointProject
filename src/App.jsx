@@ -96,12 +96,109 @@ function readCompanyEmployees(companyId) {
   } catch { return []; }
 }
 
-function EmployeesPage({ company }) {
+function readMonthlyPunches(companyId, employeeId, month) {
+  try {
+    const saved = JSON.parse(localStorage.getItem('pontoclaro-monthly-punches') || '{}');
+    return saved[`${companyId}:${employeeId}:${month}`] || {};
+  } catch { return {}; }
+}
+
+function readPunchSettings(employeeId) {
+  try {
+    const saved = JSON.parse(localStorage.getItem('pontoclaro-punch-settings') || '{}');
+    return saved[employeeId] || { scale: '6x1', dailyJourney: '08:00' };
+  } catch { return { scale: '6x1', dailyJourney: '08:00' }; }
+}
+
+function durationMinutes(value) {
+  const match = /^(\d{1,2}):([0-5]\d)$/.exec(value || '');
+  return match ? Number(match[1]) * 60 + Number(match[2]) : null;
+}
+
+function displayDuration(minutes, signed = false) {
+  if (minutes === null || !Number.isFinite(minutes)) return '—';
+  const sign = minutes < 0 ? '−' : signed && minutes > 0 ? '+' : '';
+  const absolute = Math.abs(minutes);
+  return `${sign}${String(Math.floor(absolute / 60)).padStart(2, '0')}:${String(absolute % 60).padStart(2, '0')}`;
+}
+
+function EmployeeTimesheet({ company, employee, month, onMonthChange, onBack }) {
+  const [punches, setPunches] = useState(() => readMonthlyPunches(company.id, employee.id, month));
+  const [settings, setSettings] = useState(() => readPunchSettings(employee.id));
+  const [settingsError, setSettingsError] = useState('');
+
+  useEffect(() => {
+    try {
+      const all = JSON.parse(localStorage.getItem('pontoclaro-monthly-punches') || '{}');
+      all[`${company.id}:${employee.id}:${month}`] = punches;
+      localStorage.setItem('pontoclaro-monthly-punches', JSON.stringify(all));
+    } catch { /* Keep edits available for this session if storage is unavailable. */ }
+  }, [company.id, employee.id, month, punches]);
+  useEffect(() => {
+    try {
+      const all = JSON.parse(localStorage.getItem('pontoclaro-punch-settings') || '{}');
+      all[employee.id] = settings;
+      localStorage.setItem('pontoclaro-punch-settings', JSON.stringify(all));
+    } catch { /* Keep settings available for this session if storage is unavailable. */ }
+  }, [employee.id, settings]);
+
+  const [year, monthNumber] = month.split('-').map(Number);
+  const daysInMonth = new Date(year, monthNumber, 0).getDate();
+  const expectedMinutes = durationMinutes(settings.dailyJourney);
+  const days = Array.from({ length: daysInMonth }, (_, index) => {
+    const date = new Date(year, monthNumber - 1, index + 1);
+    return { number: index + 1, weekday: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][date.getDay()], weekend: date.getDay() === 0 || date.getDay() === 6 };
+  });
+  const splitAt = Math.ceil(days.length / 2);
+  const dayColumns = [days.slice(0, splitAt), days.slice(splitAt)];
+  function workedMinutes(record) {
+    if (!record?.entry || !record?.breakStart || !record?.breakEnd || !record?.exit) return null;
+    const start = durationMinutes(record.entry); const breakStart = durationMinutes(record.breakStart);
+    const breakEnd = durationMinutes(record.breakEnd); const exit = durationMinutes(record.exit);
+    if ([start, breakStart, breakEnd, exit].some(value => value === null) || breakStart < start || breakEnd < breakStart || exit < breakEnd) return null;
+    return exit - start - (breakEnd - breakStart);
+  }
+  function updatePunch(day, field, value) {
+    setPunches(current => ({ ...current, [day]: { ...current[day], [field]: value } }));
+  }
+  function updateJourney(value) {
+    const clean = value.replace(/[^\d:]/g, '').slice(0, 5);
+    setSettings(current => ({ ...current, dailyJourney: clean }));
+    setSettingsError(clean && durationMinutes(clean) === null ? 'Use o formato HH:MM.' : '');
+  }
+  const nextMonth = delta => {
+    const next = new Date(year, monthNumber - 1 + delta, 1);
+    onMonthChange(`${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`);
+  };
+  function renderPunchTable(tableDays) {
+    return <div className="timesheet-table-wrap"><table className="timesheet-table"><thead><tr><th>DIA</th><th>SEM</th><th title="Entrada">ENTR.</th><th title="Início do intervalo">INI. INT.</th><th title="Fim do intervalo">FIM INT.</th><th title="Saída">SAÍDA</th><th>TOTAL</th><th>SALDO</th></tr></thead><tbody>
+      {tableDays.map(day => {
+        const record = punches[day.number] || {};
+        const worked = workedMinutes(record);
+        const balance = worked === null || expectedMinutes === null ? null : worked - expectedMinutes;
+        return <tr key={day.number} className={day.weekend ? 'weekend-row' : ''}><td className="day-number">{String(day.number).padStart(2, '0')}</td><td>{day.weekday}</td>{[['entry','Entrada'],['breakStart','Início do intervalo'],['breakEnd','Fim do intervalo'],['exit','Saída']].map(([field,label])=><td key={field}><input className="time-input" type="time" aria-label={`${day.number} ${label}`} value={record[field] || ''} onChange={event=>updatePunch(day.number,field,event.target.value)}/></td>)}<td className="duration-cell">{displayDuration(worked)}</td><td className={balance === null ? '' : balance < 0 ? 'negative-balance' : 'positive-balance'}>{displayDuration(balance,true)}</td></tr>;
+      })}
+    </tbody></table></div>;
+  }
+
+  return <section className="employee-timesheet-page">
+    <div className="timesheet-identity-bar"><button className="company-back-link" onClick={onBack}><ChevronLeft size={18}/> Voltar</button><div className="timesheet-employee-identity"><b>{employee.name}</b><span>{employee.role || 'Cargo não informado'} <i>·</i> CPF {employee.cpf}</span></div><span className={`employee-status ${employee.status === 'Ativo' ? 'employee-active' : 'employee-inactive'}`}><i/>{employee.status}</span></div>
+    <section className="timesheet-sheet"><div className="timesheet-settings-fields"><label>Escala<select value={settings.scale} onChange={event=>setSettings(current=>({...current,scale:event.target.value}))}><option>6x1</option><option>5x2</option><option>4x3</option><option>12x36</option><option>Personalizada</option></select></label><label>Jornada diária (HH:MM)<input inputMode="numeric" maxLength={5} placeholder="08:00" value={settings.dailyJourney} onChange={event=>updateJourney(event.target.value)} aria-invalid={Boolean(settingsError)}/>{settingsError && <small className="journey-error">{settingsError}</small>}</label><div className="month-control"><span>Mês de referência</span><div><button type="button" aria-label="Mês anterior" onClick={()=>nextMonth(-1)}><ChevronLeft size={16}/></button><input type="month" value={month} onChange={event=>event.target.value && onMonthChange(event.target.value)}/><button type="button" aria-label="Próximo mês" onClick={()=>nextMonth(1)}><ChevronRight size={16}/></button></div></div></div><div className="timesheet-tables-grid">{dayColumns.map((columnDays,index)=><div key={index}>{renderPunchTable(columnDays)}</div>)}</div></section>
+  </section>;
+}
+
+function EmployeesPage({ company, onBackToFunctions }) {
   const emptyForm = { name: '', cpf: '', role: '', admissionDate: '', status: 'Ativo' };
   const [employees, setEmployees] = useState(() => readCompanyEmployees(company.id));
   const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('Todos');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  });
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [formError, setFormError] = useState('');
@@ -114,9 +211,14 @@ function EmployeesPage({ company }) {
     } catch { /* Ignore storage failures; the current session remains usable. */ }
   }, [company.id, employees]);
 
-  const filteredEmployees = employees.filter(employee =>
-    `${employee.name} ${employee.cpf} ${employee.role}`.toLowerCase().includes(query.toLowerCase())
-  );
+  const activeCount = employees.filter(employee => employee.status === 'Ativo').length;
+  const inactiveCount = employees.length - activeCount;
+  const filteredEmployees = employees.filter(employee => {
+    const matchesQuery = `${employee.name} ${employee.cpf} ${employee.role}`.toLowerCase().includes(query.toLowerCase());
+    const matchesStatus = statusFilter === 'Todos' || employee.status === statusFilter;
+    return matchesQuery && matchesStatus;
+  });
+  const selectedEmployee = employees.find(employee => employee.id === selectedEmployeeId);
   function openCreate() { setEditingId(null); setForm(emptyForm); setFormError(''); setModalOpen(true); }
   function openEdit(employee) { setEditingId(employee.id); setForm({ ...emptyForm, ...employee }); setFormError(''); setModalOpen(true); }
   function closeModal() { setModalOpen(false); setEditingId(null); setForm(emptyForm); setFormError(''); }
@@ -137,11 +239,13 @@ function EmployeesPage({ company }) {
   }
 
   return <section className="employees-page">
+    {selectedEmployee ? <EmployeeTimesheet key={`${company.id}:${selectedEmployee.id}:${selectedMonth}`} company={company} employee={selectedEmployee} month={selectedMonth} onMonthChange={setSelectedMonth} onBack={()=>setSelectedEmployeeId(null)}/> : <>
+    <button className="company-back-link" onClick={onBackToFunctions}><ChevronLeft size={19}/> Voltar para funções</button>
     <div className="employees-heading"><div><h2>Controle de Ponto</h2></div><button className="primary-button employee-add-button" onClick={openCreate}><Plus size={20}/> Adicionar funcionário</button></div>
-    <div className="employees-section-heading"><div><h3>Funcionários ({employees.length})</h3></div><label className="search-field"><Search size={18}/><input aria-label="Buscar funcionários" placeholder="Buscar por nome, CPF ou cargo" value={query} onChange={event=>setQuery(event.target.value)}/></label></div>
+    <div className="employees-section-heading"><div className="employee-list-title"><h3>Funcionários ({employees.length})</h3></div><div className="employees-controls"><div className="employee-filter-tabs" role="group" aria-label="Filtrar funcionários por status"><button type="button" className={statusFilter==='Todos'?'selected':''} aria-pressed={statusFilter==='Todos'} onClick={()=>setStatusFilter('Todos')}>Todos <span>{employees.length}</span></button><button type="button" className={statusFilter==='Ativo'?'selected':''} aria-pressed={statusFilter==='Ativo'} onClick={()=>setStatusFilter('Ativo')}>Ativos <span>{activeCount}</span></button><button type="button" className={statusFilter==='Inativo'?'selected':''} aria-pressed={statusFilter==='Inativo'} onClick={()=>setStatusFilter('Inativo')}>Inativos <span>{inactiveCount}</span></button></div><label className="search-field"><Search size={18}/><input aria-label="Buscar funcionários" placeholder="Buscar por nome, CPF ou cargo" value={query} onChange={event=>setQuery(event.target.value)}/></label></div></div>
     <div className="employees-table-wrap"><table className="employees-table"><thead><tr><th>FUNCIONÁRIO</th><th>CPF</th><th>CARGO</th><th>ADMISSÃO</th><th>STATUS</th><th className="open-column-heading">ABRIR</th><th className="actions-heading">AÇÕES</th></tr></thead><tbody>
-      {filteredEmployees.map(employee => <tr key={employee.id}><td><div className="employee-name-cell"><span>{employee.name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join('').toUpperCase()}</span><b>{employee.name}</b></div></td><td>{employee.cpf}</td><td>{employee.role || '—'}</td><td>{employee.admissionDate ? employee.admissionDate.split('-').reverse().join('/') : '—'}</td><td><span className={`employee-status ${employee.status === 'Ativo' ? 'employee-active' : 'employee-inactive'}`}><i/>{employee.status}</span></td><td className="open-employee-cell"><button type="button" className="open-employee-button" disabled aria-disabled="true" title="Disponível em uma próxima etapa">Abrir</button></td><td><div className="company-actions"><button type="button" title="Editar funcionário" aria-label={`Editar ${employee.name}`} onClick={()=>openEdit(employee)}><Pencil size={18}/></button><button type="button" className="delete-action" title="Excluir funcionário" aria-label={`Excluir ${employee.name}`} onClick={()=>setDeleteTarget(employee)}><Trash2 size={18}/></button></div></td></tr>)}
-    </tbody></table>{filteredEmployees.length === 0 && <div className="companies-empty"><span className="company-list-icon"><Users size={25}/></span><h3>{query ? 'Nenhum funcionário encontrado' : 'Nenhum funcionário cadastrado'}</h3><p>{query ? 'Tente buscar por outro nome, CPF ou cargo.' : 'Adicione funcionários para iniciar o controle de ponto desta empresa.'}</p>{!query && <button className="secondary-button" onClick={openCreate}><Plus size={19}/> Adicionar funcionário</button>}</div>}</div>
+      {filteredEmployees.map(employee => <tr key={employee.id}><td><div className="employee-name-cell"><span>{employee.name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join('').toUpperCase()}</span><b>{employee.name}</b></div></td><td>{employee.cpf}</td><td>{employee.role || '—'}</td><td>{employee.admissionDate ? employee.admissionDate.split('-').reverse().join('/') : '—'}</td><td><span className={`employee-status ${employee.status === 'Ativo' ? 'employee-active' : 'employee-inactive'}`}><i/>{employee.status}</span></td><td className="open-employee-cell"><button type="button" className="open-employee-button" onClick={()=>setSelectedEmployeeId(employee.id)}>Abrir</button></td><td><div className="company-actions"><button type="button" title="Editar funcionário" aria-label={`Editar ${employee.name}`} onClick={()=>openEdit(employee)}><Pencil size={18}/></button><button type="button" className="delete-action" title="Excluir funcionário" aria-label={`Excluir ${employee.name}`} onClick={()=>setDeleteTarget(employee)}><Trash2 size={18}/></button></div></td></tr>)}
+    </tbody></table>{filteredEmployees.length === 0 && <div className="companies-empty"><span className="company-list-icon"><Users size={25}/></span><h3>{employees.length === 0 ? 'Nenhum funcionário cadastrado' : 'Nenhum funcionário encontrado'}</h3><p>{employees.length === 0 ? 'Adicione funcionários para iniciar o controle de ponto desta empresa.' : query ? 'Tente buscar por outro nome, CPF ou cargo.' : 'Não há funcionários neste filtro de status.'}</p>{employees.length === 0 && <button className="secondary-button" onClick={openCreate}><Plus size={19}/> Adicionar funcionário</button>}</div>}</div>
     {modalOpen && <div className="modal-backdrop" onMouseDown={event=>{if(event.target===event.currentTarget) closeModal();}}><section className="company-modal employee-modal" role="dialog" aria-modal="true" aria-labelledby="employee-modal-title"><div className="modal-heading"><div><span className="eyebrow">{company.name}</span><h2 id="employee-modal-title">{editingId ? 'Editar funcionário' : 'Adicionar funcionário'}</h2><p>Informe os dados principais do cadastro.</p></div><button className="modal-close" type="button" aria-label="Fechar" onClick={closeModal}><X size={22}/></button></div><form className="company-form" onSubmit={saveEmployee}>
       <label className="form-field full-field">Nome completo<input autoFocus required maxLength={120} placeholder="Nome e sobrenome" value={form.name} onChange={event=>setForm(current=>({...current,name:event.target.value}))}/></label>
       <label className="form-field">CPF<input required inputMode="numeric" maxLength={14} placeholder="000.000.000-00" value={form.cpf} onChange={event=>setForm(current=>({...current,cpf:formatCpf(event.target.value)}))}/></label>
@@ -151,6 +255,7 @@ function EmployeesPage({ company }) {
       {formError && <p className="company-form-error" role="alert">{formError}</p>}
       <div className="modal-actions"><button className="secondary-button" type="button" onClick={closeModal}>Cancelar</button><button className="primary-button" type="submit">{editingId ? 'Salvar alterações' : 'Cadastrar funcionário'}</button></div>
     </form></section></div>}
+    </>}
     {deleteTarget && <div className="modal-backdrop" onMouseDown={event=>{if(event.target===event.currentTarget) setDeleteTarget(null);}}><section className="delete-modal" role="alertdialog" aria-modal="true" aria-labelledby="delete-employee-title"><div className="delete-modal-icon"><AlertTriangle size={25}/></div><h2 id="delete-employee-title">Excluir funcionário?</h2><div className="delete-modal-actions"><button className="secondary-button" type="button" onClick={()=>setDeleteTarget(null)}>Cancelar</button><button className="danger-button" type="button" onClick={confirmDelete}><Trash2 size={18}/> Excluir funcionário</button></div></section></div>}
   </section>;
 }
@@ -203,8 +308,7 @@ function CompaniesPage({ companies, setCompanies }) {
 
   return <section className="companies-page">
     {selectedCompany ? activeFunction ? <div className="company-function-page">
-      <button className="company-back-link" onClick={()=>setActiveFunction(false)}><ChevronLeft size={19}/> Voltar para funções</button>
-      <EmployeesPage key={selectedCompany.id} company={selectedCompany}/>
+      <EmployeesPage key={selectedCompany.id} company={selectedCompany} onBackToFunctions={()=>setActiveFunction(false)}/>
     </div> : <div className="company-workspace-page">
       <button className="company-back-link" onClick={()=>{setSelectedCompanyId(null);setActiveFunction(false);}}><ChevronLeft size={19}/> Voltar para Empresas Ativas</button>
       <div className="company-workspace-heading"><span className="company-detail-icon"><Building2 size={25}/></span><div><span className="eyebrow">ESPAÇO DA EMPRESA</span><h2>{selectedCompany.name}</h2><p>Selecione uma função para continuar.</p></div><span className={`company-status ${selectedCompany.status === 'Ativa' ? 'is-active' : 'is-inactive'}`}><i/>{selectedCompany.status}</span></div>

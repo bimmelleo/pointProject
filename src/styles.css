@@ -328,6 +328,162 @@
 .employee-modal{width:min(100%,660px)}
 @media(max-width:800px){.employees-heading{align-items:flex-start;flex-direction:column}.employees-section-heading{align-items:stretch;flex-direction:column}.employees-section-heading .search-field{width:100%}.employees-table-wrap{overflow-x:auto}.employees-table{min-width:820px}}
 @media(max-width:460px){.employees-heading{padding:18px}.employees-heading h2{font-size:23px}.employee-add-button{width:100%;justify-content:center}}
+.employees-section-heading{align-items:center}
+.employee-list-title h3{font-size:22px}
+.employees-controls{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
+.employee-filter-tabs{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #e5e9e5;border-radius:8px;background:#fff}
+.employee-filter-tabs button{min-height:34px;display:flex;align-items:center;gap:7px;padding:0 10px;border:0;border-radius:6px;background:transparent;color:#737d75;font-size:12px;font-weight:600;white-space:nowrap}
+.employee-filter-tabs button.selected{background:#eaf1eb;color:#3f704b}
+.employee-filter-tabs button span{min-width:18px;text-align:center;padding:2px 4px;border-radius:10px;background:#f0f2ef;color:#68746b;font-size:10px}
+.employee-filter-tabs button.selected span{background:#d9e8db;color:#3f704b}
+.employees-controls .search-field{height:43px;width:min(355px,40vw);padding:0 12px;border-radius:7px;background:#fff}
+@media(max-width:800px){.employees-controls{align-items:stretch;flex-direction:column}.employees-controls .search-field{width:100%}.employee-filter-tabs{width:max-content;max-width:100%;overflow-x:auto}}
+@media(max-width:460px){.employee-filter-tabs{width:100%;justify-content:space-between}.employee-filter-tabs button{flex:1;justify-content:center;padding:0 6px;font-size:11px}.employee-list-title h3{font-size:20px}}
+.employee-timesheet-page{display:grid;gap:18px;min-width:0}
+.timesheet-title-card{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 23px;border:1px solid #e7ebe7;border-radius:11px;background:#fff}
+.timesheet-title-card h2{font:700 25px var(--serif);letter-spacing:-.6px;color:#2d382f;margin:5px 0}
+.timesheet-title-card p{font-size:13px;color:#737e75;margin:0}
+.timesheet-title-card p span{padding:0 4px;color:#b0b7b1}
+.timesheet-settings{display:grid;gap:17px;padding:20px 22px;border:1px solid #e7ebe7;border-radius:11px;background:#fff}
+.timesheet-settings-title h3{font:700 17px var(--serif);color:#354138;margin:0 0 4px}
+.timesheet-settings-title p{font-size:12px;color:#7a847c;margin:0}
+.timesheet-settings-fields{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(180px,.8fr) minmax(230px,1.2fr);gap:14px;align-items:start}
+.timesheet-settings-fields>label{display:grid;gap:7px;color:#4d584f;font-size:12px;font-weight:600}
+.timesheet-settings-fields select,.timesheet-settings-fields input{height:42px;width:100%;border:1px solid #dfe5df;border-radius:7px;background:#fff;padding:0 11px;color:#344037;font:500 13px 'DM Sans',sans-serif}
+.timesheet-settings-fields select:focus,.timesheet-settings-fields input:focus{outline:0;border-color:#78967c;box-shadow:0 0 0 3px #638b6a18}
+.timesheet-settings-fields [aria-invalid="true"]{border-color:#bd695f}
+.journey-error{color:#a34c44;font-size:11px;font-weight:500}
+.month-control{display:grid;gap:7px;color:#4d584f;font-size:12px;font-weight:600}
+.month-control>div{display:flex;align-items:center;gap:6px}
+.month-control button{width:40px;height:42px;display:grid;place-items:center;border:1px solid #dfe5df;border-radius:7px;background:#fff;color:#68736a}
+.month-control button:hover{background:#f3f6f2}
+.month-control input{flex:1;min-width:0}
+.timesheet-period{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.timesheet-period h3{font:700 18px var(--serif);color:#344037;margin:0}
+.timesheet-period>span{text-transform:capitalize;color:#68746b;font-size:14px;font-weight:600}
+.timesheet-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.timesheet-summary article{min-height:76px;display:grid;align-content:center;gap:6px;padding:12px 15px;border:1px solid #e7ebe7;border-radius:9px;background:#fff}
+.timesheet-summary article span{font-size:11px;color:#788279}
+.timesheet-summary article b{font:700 20px var(--serif);color:#344037}
+.positive-balance{color:#49714f!important}.negative-balance{color:#a34c44!important}
+.timesheet-table-wrap{min-width:0;overflow:auto;border:1px solid #e8ece8;border-radius:10px;background:#fff}
+.timesheet-table{width:100%;min-width:1120px;border-collapse:collapse;white-space:nowrap;text-align:left}
+.timesheet-table thead{background:#f7f9f6}
+.timesheet-table th{padding:12px 10px;color:#788279;font-size:10px;letter-spacing:.4px}
+.timesheet-table td{padding:7px 9px;border-top:1px solid #edf0ed;color:#4d584f;font-size:12px}
+.timesheet-table tbody tr{height:50px}
+.timesheet-table .day-number{font-weight:700;color:#3e4c42}
+.timesheet-table .weekend-row{background:#fbfcfa}
+.time-input{width:96px;height:34px;border:1px solid #e1e6e1;border-radius:6px;background:#fff;padding:0 6px;color:#344037;font:500 12px 'DM Sans',sans-serif}
+.time-input:focus{outline:0;border-color:#78967c;box-shadow:0 0 0 3px #638b6a18}
+.duration-cell{font-weight:700;color:#3d6547!important}
+.sheet-status{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.sheet-status i{width:6px;height:6px;border-radius:50%}
+.sheet-complete{background:#edf5ee;color:#49714f}.sheet-complete i{background:#5a9565}
+.sheet-pending{background:#f6f1e7;color:#98784a}.sheet-pending i{background:#c4a064}
+.sheet-future{background:#f0f2f0;color:#788179}.sheet-future i{background:#a5ada6}
+@media(max-width:900px){.timesheet-settings-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.month-control{grid-column:1/-1}}
+@media(max-width:700px){.timesheet-title-card{align-items:flex-start;flex-direction:column}.timesheet-title-card h2{font-size:22px}.timesheet-settings{padding:17px}.timesheet-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.timesheet-settings-fields{grid-template-columns:1fr}.month-control{grid-column:auto}.timesheet-summary{gap:8px}.timesheet-summary article{padding:10px}.timesheet-period>span{font-size:12px}}
+.company-function-page{gap:0;margin-top:-20px}
+.employee-timesheet-page{gap:7px}
+.employee-timesheet-page>.company-back-link{min-height:22px;padding:0;font-size:12px}
+.timesheet-title-card{min-height:50px;padding:7px 14px;border-radius:9px}
+.timesheet-title-card .eyebrow{font-size:9px;letter-spacing:.7px}
+.timesheet-title-card h2{font-size:19px;margin:2px 0}
+.timesheet-title-card p{font-size:11px}
+.timesheet-title-card .employee-status{padding:5px 8px;font-size:10px}
+.timesheet-settings{grid-template-columns:155px minmax(0,1fr);align-items:center;gap:10px;padding:8px 12px;border-radius:9px}
+.timesheet-settings-title h3{font-size:13px;margin:0}
+.timesheet-settings-fields{grid-template-columns:minmax(100px,.75fr) minmax(135px,.85fr) minmax(185px,1.25fr);gap:9px}
+.timesheet-settings-fields>label,.month-control{gap:4px;font-size:10px}
+.timesheet-settings-fields select,.timesheet-settings-fields input{height:32px;padding:0 8px;font-size:11px;border-radius:6px}
+.month-control>div{gap:4px}
+.month-control button{width:31px;height:32px;border-radius:6px}
+.journey-error{font-size:9px}
+.timesheet-week-toolbar{min-height:24px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#566158;font-size:12px;font-weight:600}
+.timesheet-week-toolbar>div{display:flex;align-items:center;gap:8px}
+.timesheet-week-toolbar button{width:25px;height:24px;display:grid;place-items:center;padding:0;border:1px solid #dfe5df;border-radius:5px;background:#fff;color:#566158}
+.timesheet-week-toolbar button:disabled{color:#b4bbb5;cursor:not-allowed;background:#f7f8f6}
+.timesheet-table-wrap{max-height:none;overflow-x:auto;overflow-y:visible}
+.timesheet-table{min-width:1000px}
+.timesheet-table th{padding:6px 7px;font-size:9px;letter-spacing:.25px}
+.timesheet-table td{padding:3px 6px;font-size:10px}
+.timesheet-table tbody tr{height:31px}
+.time-input{width:78px;height:24px;padding:0 3px;border-radius:4px;font-size:10px}
+.sheet-status{padding:3px 6px;font-size:9px}
+.sheet-status i{width:5px;height:5px}
+@media(max-width:900px){.timesheet-settings{grid-template-columns:1fr;gap:7px}.timesheet-settings-fields{grid-template-columns:repeat(3,minmax(0,1fr))}.timesheet-settings-title h3{font-size:12px}}
+@media(max-width:700px){.company-function-page{margin-top:-10px}.timesheet-title-card{align-items:flex-start;flex-direction:row}.timesheet-title-card h2{font-size:17px}.timesheet-settings-fields{grid-template-columns:1fr 1fr}.month-control{grid-column:1/-1}.timesheet-week-toolbar{font-size:11px}}
+@media(max-width:460px){.timesheet-title-card{padding:7px 9px}.timesheet-title-card p{font-size:10px}.timesheet-title-card .employee-status{font-size:9px;padding:4px 6px}}
+.company-function-page{margin-top:-25px}
+.employee-timesheet-page{gap:8px}
+.timesheet-identity-bar{min-height:34px;display:flex;align-items:center;gap:16px;min-width:0}
+.timesheet-identity-bar>.company-back-link{min-height:30px;flex:0 0 auto;padding:0 8px 0 0;font-size:12px}
+.timesheet-employee-identity{min-width:0;display:flex;align-items:baseline;gap:10px;flex:1}
+.timesheet-employee-identity>b{font:700 17px var(--serif);color:#303a33;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timesheet-employee-identity>span{font-size:11px;color:#6f7971;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timesheet-employee-identity i{font-style:normal;color:#a3aaa4;padding:0 2px}
+.timesheet-identity-bar>.employee-status{flex:0 0 auto;font-size:10px;padding:5px 8px}
+.timesheet-sheet{display:grid;gap:8px;min-width:0;padding:8px;border:1px solid #e3e8e3;border-radius:10px;background:#fff}
+.timesheet-sheet .timesheet-settings-fields{grid-template-columns:minmax(110px,.8fr) minmax(145px,.9fr) minmax(190px,1.15fr);gap:9px;align-items:end}
+.timesheet-sheet .timesheet-settings-fields>label,.timesheet-sheet .month-control{gap:3px;color:#566158;font-size:9px}
+.timesheet-sheet .timesheet-settings-fields select,.timesheet-sheet .timesheet-settings-fields input{height:29px;padding:0 7px;font-size:10px;border-radius:5px}
+.timesheet-sheet .month-control>div{gap:3px}
+.timesheet-sheet .month-control button{height:29px;width:26px;border-radius:5px}
+.timesheet-sheet .journey-error{font-size:9px}
+.timesheet-tables-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;min-width:0}
+.timesheet-tables-grid>div{min-width:0}
+.timesheet-tables-grid .timesheet-table-wrap{overflow:visible;border:0;border-radius:0;max-height:none}
+.timesheet-tables-grid .timesheet-table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse}
+.timesheet-tables-grid .timesheet-table th{height:20px;padding:2px 2px;font-size:7px;letter-spacing:0;text-align:center}
+.timesheet-tables-grid .timesheet-table td{height:20px;padding:1px 2px;font-size:9px;text-align:center;overflow:hidden}
+.timesheet-tables-grid .timesheet-table tbody tr{height:20px}
+.timesheet-tables-grid .timesheet-table th:nth-child(1),.timesheet-tables-grid .timesheet-table td:nth-child(1){width:7%}
+.timesheet-tables-grid .timesheet-table th:nth-child(2),.timesheet-tables-grid .timesheet-table td:nth-child(2){width:8%}
+.timesheet-tables-grid .timesheet-table th:nth-child(3),.timesheet-tables-grid .timesheet-table td:nth-child(3),.timesheet-tables-grid .timesheet-table th:nth-child(4),.timesheet-tables-grid .timesheet-table td:nth-child(4),.timesheet-tables-grid .timesheet-table th:nth-child(5),.timesheet-tables-grid .timesheet-table td:nth-child(5),.timesheet-tables-grid .timesheet-table th:nth-child(6),.timesheet-tables-grid .timesheet-table td:nth-child(6){width:14%}
+.timesheet-tables-grid .timesheet-table th:nth-child(7),.timesheet-tables-grid .timesheet-table td:nth-child(7),.timesheet-tables-grid .timesheet-table th:nth-child(8),.timesheet-tables-grid .timesheet-table td:nth-child(8){width:9%}
+.timesheet-tables-grid .timesheet-table th:nth-child(9),.timesheet-tables-grid .timesheet-table td:nth-child(9){width:11%}
+.timesheet-tables-grid .time-input{display:block;width:100%;min-width:0;height:18px;padding:0 1px;border-radius:3px;font-size:8px;line-height:1}
+.timesheet-tables-grid .sheet-status{justify-content:center;gap:3px;padding:2px 3px;font-size:7px;line-height:1}
+.timesheet-tables-grid .sheet-status i{width:4px;height:4px;flex:0 0 4px}
+.timesheet-tables-grid .duration-cell{font-size:8px!important}
+@media(max-width:1100px){.timesheet-tables-grid{grid-template-columns:1fr}.timesheet-tables-grid .timesheet-table-wrap{overflow-x:auto}.timesheet-tables-grid .timesheet-table{min-width:580px}}
+@media(max-width:700px){.company-function-page{margin-top:-12px}.timesheet-identity-bar{gap:8px;flex-wrap:wrap}.timesheet-identity-bar>.company-back-link{width:100%}.timesheet-employee-identity{flex-direction:column;align-items:flex-start;gap:2px}.timesheet-sheet .timesheet-settings-fields{grid-template-columns:1fr 1fr}.timesheet-sheet .month-control{grid-column:1/-1}}
+.timesheet-tables-grid .timesheet-table th:nth-child(1),.timesheet-tables-grid .timesheet-table td:nth-child(1){width:6%}
+.timesheet-tables-grid .timesheet-table th:nth-child(2),.timesheet-tables-grid .timesheet-table td:nth-child(2){width:8%}
+.timesheet-tables-grid .timesheet-table th:nth-child(3),.timesheet-tables-grid .timesheet-table td:nth-child(3),.timesheet-tables-grid .timesheet-table th:nth-child(4),.timesheet-tables-grid .timesheet-table td:nth-child(4),.timesheet-tables-grid .timesheet-table th:nth-child(5),.timesheet-tables-grid .timesheet-table td:nth-child(5),.timesheet-tables-grid .timesheet-table th:nth-child(6),.timesheet-tables-grid .timesheet-table td:nth-child(6){width:16%}
+.timesheet-tables-grid .timesheet-table th:nth-child(7),.timesheet-tables-grid .timesheet-table td:nth-child(7),.timesheet-tables-grid .timesheet-table th:nth-child(8),.timesheet-tables-grid .timesheet-table td:nth-child(8){width:11%}
+.timesheet-tables-grid .timesheet-table thead tr{height:23px}
+.timesheet-tables-grid .timesheet-table tbody tr{height:clamp(22px,calc((100vh - 190px)/16),36px)}
+.timesheet-tables-grid .timesheet-table td{height:auto;padding:2px 2px}
+.timesheet-tables-grid .time-input{height:21px;font-size:9px}
+.timesheet-tables-grid .timesheet-table .day-number{background:#edf1ed;color:#202a23;font-size:10px;font-weight:800}
+.timesheet-tables-grid .timesheet-table th:nth-child(7),.timesheet-tables-grid .timesheet-table th:nth-child(8){color:#27352b;font-weight:800;background:#e8eee8}
+.timesheet-tables-grid .timesheet-table td:nth-child(7){background:#f0f5f0;color:#234d2d!important;font-size:10px!important;font-weight:800}
+.timesheet-tables-grid .timesheet-table td:nth-child(8){background:#f4f5f3;color:#303a32;font-size:10px;font-weight:800}
+.timesheet-tables-grid .timesheet-table td:nth-child(8).positive-balance{color:#1f6a32!important;background:#edf5ed}
+.timesheet-tables-grid .timesheet-table td:nth-child(8).negative-balance{color:#a02c25!important;background:#fbefed}
+.sidebar{width:200px}
+.main-area{margin-left:200px}
+.dashboard-topbar{height:56px;padding:0 28px}
+.dashboard-topbar h1{font-size:20px}
+.content{padding:20px 28px 15px}
+.timesheet-identity-bar{min-height:38px}
+.timesheet-sheet{padding:10px;gap:9px}
+.timesheet-sheet .timesheet-settings-fields select,.timesheet-sheet .timesheet-settings-fields input{height:31px;font-size:11px}
+.timesheet-sheet .month-control button{height:31px;width:29px}
+.timesheet-tables-grid .timesheet-table th{height:22px;font-size:8px}
+.timesheet-tables-grid .timesheet-table td{font-size:10px}
+.timesheet-tables-grid .timesheet-table tbody tr{height:clamp(22px,calc((100vh - 230px)/16),34px)}
+.timesheet-tables-grid .time-input{height:23px;font-size:10px;padding:0 2px}
+.timesheet-tables-grid .timesheet-table .day-number{font-size:11px}
+.timesheet-tables-grid .timesheet-table td:nth-child(7),.timesheet-tables-grid .timesheet-table td:nth-child(8){font-size:11px!important}
+@media(max-width:1100px){.sidebar{width:200px}.main-area{margin-left:200px}.content{padding:18px 21px 14px}}
+@media(max-width:800px){.sidebar{width:230px}.main-area{margin-left:0}.dashboard-topbar{height:52px;padding:0 16px}.dashboard-topbar+.content{padding-top:16px}.content{padding:16px 18px 14px}}
+@media(max-width:560px){.content{padding:14px 13px 12px}}
+@media(min-width:561px) and (max-width:1100px){.timesheet-tables-grid{grid-template-columns:1fr}.timesheet-tables-grid .timesheet-table-wrap{overflow-x:auto}.timesheet-tables-grid .timesheet-table{min-width:580px}}
+@media(max-width:560px){.timesheet-tables-grid{grid-template-columns:1fr}.timesheet-tables-grid .timesheet-table-wrap{overflow-x:auto}.timesheet-tables-grid .timesheet-table{min-width:580px}}
 .employee-status-cell{display:flex;align-items:center;gap:9px;min-width:155px}
 .open-employee-button{min-height:34px;padding:0 12px;border:1px solid #d6e2d7;border-radius:7px;background:#f5f8f4;color:#456e4d;font-size:12px;font-weight:700;transition:background .15s ease,border-color .15s ease}
 .open-employee-button:hover{background:#e8f0e8;border-color:#b9cfbc}
@@ -346,3 +502,30 @@
 .open-employee-button,.open-employee-button:disabled{min-width:116px;min-height:42px;padding:0 14px;font-size:13px}
 .employees-table{min-width:950px}
 @media(max-width:800px){.dashboard-topbar{height:62px}}
+
+/* Compacta a navegação global e libera área útil para a folha de ponto. */
+.sidebar{width:204px}
+.main-area{margin-left:204px}
+.dashboard-topbar{height:52px;padding:0 24px}
+.dashboard-topbar h1{font-size:19px}
+.content{padding:16px 24px 12px}
+.company-function-page{margin-top:0}
+.timesheet-identity-bar{min-height:36px}
+.timesheet-sheet{padding:8px;gap:7px}
+.timesheet-sheet .timesheet-settings-fields select,.timesheet-sheet .timesheet-settings-fields input{height:34px;font-size:12px}
+.timesheet-sheet .month-control button{height:34px;width:31px}
+.timesheet-tables-grid .timesheet-table thead tr{height:26px}
+.timesheet-tables-grid .timesheet-table th{font-size:9px;padding:3px 3px}
+.timesheet-tables-grid .timesheet-table td{font-size:11px;padding:2px 3px}
+.timesheet-tables-grid .timesheet-table tbody tr{height:clamp(23px,calc((100vh - 190px)/16),34px)}
+.timesheet-tables-grid .time-input{height:24px;font-size:10px;padding:0 3px}
+.timesheet-tables-grid .timesheet-table .day-number{font-size:12px}
+.timesheet-tables-grid .timesheet-table td:nth-child(7),.timesheet-tables-grid .timesheet-table td:nth-child(8){font-size:11px!important}
+@media(max-width:1100px){.sidebar{width:204px}.main-area{margin-left:204px}.content{padding:15px 18px 11px}}
+@media(max-width:800px){.sidebar{width:230px}.main-area{margin-left:0}.dashboard-topbar{height:50px;padding:0 15px}.content{padding:14px 16px 11px}}
+@media(max-width:700px){.company-function-page{margin-top:0}}
+@media(max-width:560px){.content{padding:12px 12px 10px}.timesheet-tables-grid{grid-template-columns:1fr}.timesheet-tables-grid .timesheet-table-wrap{overflow-x:auto}.timesheet-tables-grid .timesheet-table{min-width:580px}}
+
+.open-employee-button{cursor:pointer;background:#477956;color:#fff;border-color:#3f7050}
+.open-employee-button:hover{background:#386746;border-color:#315d3e}
+.open-employee-button:disabled{cursor:not-allowed;background:#e8ece8;color:#606a62;border-color:#d5dbd5}
